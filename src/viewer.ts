@@ -1,4 +1,4 @@
-import { Parser, HtmlRenderer } from "commonmark"
+import MarkdownIt from "markdown-it";
 import Mermaid from "mermaid";
 import * as SDK from 'azure-devops-extension-sdk';
 
@@ -6,6 +6,10 @@ export default class MermaidViewer {
 
     private _autoResizeInited: boolean = false;
     private _resizePending: boolean = false;
+    private _markdown = new MarkdownIt({
+        html: true,
+        linkify: true,
+    });
 
     private requestResize(container?: HTMLElement | null) {
 
@@ -79,10 +83,12 @@ export default class MermaidViewer {
         return rawContent;
     }
 
-    public async renderContent(rawContent : string, options) {
+    private renderMarkdown(container: HTMLElement, rawContent: string) {
+        container.classList.add('markdown-body');
+        container.innerHTML = this._markdown.render(rawContent);
+    }
 
-        var reader = new Parser();
-        var writer = new HtmlRenderer();
+    public async renderContent(rawContent : string, options) {
 
         console.log("rawContent");
         console.log(rawContent);
@@ -98,8 +104,8 @@ export default class MermaidViewer {
   
         if (rawContentCleaned.includes('```'))
         {
-            var parsed = reader.parse(rawContentCleaned);
-            var resultHtml = writer.render(parsed);
+            container.classList.add('markdown-body');
+            var resultHtml = this._markdown.render(rawContentCleaned);
 
             container.innerHTML = resultHtml
             var mermaidParagraphs = container.querySelectorAll('pre > code.language-mermaid')
@@ -125,17 +131,14 @@ export default class MermaidViewer {
         else
         {
             //console.log("ready to render raw mermaid");
+            container.classList.remove('markdown-body');
 
             var graphDefinition = rawContent;
 
             Mermaid.parseError = (err, hash) => {
                 console.warn("parse error, maybe the syntax is invalid or not contains a mermaid diagram", err, hash);
                 // On parse failure: render the original text as markdown so headers and formatting show
-                const parsed = reader.parse(graphDefinition);
-                const html = writer.render(parsed);
-                // apply markdown styling
-                container.classList.add('markdown-body');
-                container.innerHTML = html;
+                this.renderMarkdown(container, graphDefinition);
                 // request host to resize the frame so content is fully visible
                 this.requestResize(container);
                 // remove the style applied to body, I don't want it in fallback case
@@ -159,11 +162,7 @@ export default class MermaidViewer {
                 console.error('Mermaid render failed:', err);
 
                 // On render failure: render the original text as markdown so headers and formatting show
-                const parsed = reader.parse(graphDefinition);
-                const html = writer.render(parsed);
-                // apply markdown styling
-                container.classList.add('markdown-body');
-                container.innerHTML = html;
+                this.renderMarkdown(container, graphDefinition);
                 // request host to resize the frame so content is fully visible
                 this.requestResize(container);
                 // remove the style applied to body, I don't want it in fallback case

@@ -13,3 +13,10 @@ sequenceDiagram
     Alice ->> Bob: Hello Bob, how are you?
     Bob-->Alice: Hi!
 :::
+
+## Table Support
+
+| Column | Value |
+| --- | --- |
+| `diagram` | `mermaid` |
+| `table` | `gfm` |

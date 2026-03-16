@@ -1,0 +1,42 @@
+name: Publish Azure DevOps Extension
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build extension
+        run: npm run build
+
+      - name: Install TFX CLI
+        run: npm install -g tfx-cli
+
+      - name: Publish extension
+        run: |
+          tfx extension publish \
+            --manifest-globs vss-extension.json \
+            --publisher flintslabs \
+            --auth-type pat \
+            --token "${{ secrets.VS_MARKETPLACE_PAT }}" \
+            --rev-version
