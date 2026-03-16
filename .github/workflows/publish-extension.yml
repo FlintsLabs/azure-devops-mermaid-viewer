@@ -70,6 +70,7 @@ jobs:
         run: |
           tfx extension publish \
             --manifest-globs vss-extension.json \
+            --overrides-file configs/release.json \
             --publisher flintslabs \
             --auth-type pat \
             --token "${{ secrets.VS_MARKETPLACE_PAT }}"
