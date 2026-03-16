@@ -2,8 +2,9 @@
 
 ## Overview
 
-This Azure DevOps Extension allows to render your .mmd files on your Azure DevOps Repos.
-Click [here](https://marketplace.visualstudio.com/items?itemName=DanieleCas.azure-devops-mermaid-viewer) to install.
+Mermaid Viewer is an Azure DevOps extension for previewing Mermaid diagrams and Markdown files directly in Azure Repos and Pull Requests.
+
+This fork is maintained by FlintsLabs and is based on the original project by [DanieleCas](https://github.com/daniecas/azure-devops-mermaid-viewer). The original repository is credited here with appreciation for the initial implementation and extension structure.
 
 
 ## Usage
@@ -19,8 +20,27 @@ Go to Repos:
 
   ![Preview Diagram](doc/pr_preview_diagram.png)
 
+## Supported Markdown
 
-note: in `.md` extension you need to use  `:::mermaid` convention to avoid conflicts with markdown statements, you can find an example in src/test/markdown-test.md Mermaid Diagram 2
+For `.md` files, the extension currently supports common documentation patterns such as:
+- headings
+- paragraphs
+- ordered and unordered lists
+- links
+- inline code and fenced code blocks
+- blockquotes
+- tables
+- Mermaid diagrams in fenced blocks such as ```` ```mermaid ```` or `:::mermaid`
+
+You can see an example in [src/test/markdown-test.md](/Users/kanokpichasonsmacbookair/Documents/GitHub/azure-devops-mermaid-viewer/src/test/markdown-test.md).
+
+## How It Works
+
+At a high level, the extension works as an Azure DevOps content renderer for `.mmd` and `.md` files:
+- `.mmd` files are treated as Mermaid source and rendered directly as SVG
+- `.md` files are parsed as Markdown and rendered to HTML
+- Mermaid code blocks inside Markdown are detected and converted to Mermaid diagrams
+- the extension uses the Azure DevOps SDK to resize the preview and follow the active host theme
 
 ## Run Locally
 
@@ -52,7 +72,7 @@ To create a new package for production deployment:
 
 ## For contributors
 
-Contributions are welcome, Feel free to create a Pull Request or Contact me to give your suggestions 
+Contributions are welcome. Feel free to create a Pull Request or open an issue in this fork.
 
 
 

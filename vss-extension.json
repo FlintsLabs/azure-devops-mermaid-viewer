@@ -4,7 +4,7 @@
     "publisher": "flintslabs",
     "version": "1.0.0",
     "name": "Mermaid Viewer",
-    "description": "Renders a Preview for your Mermaid Diagram in your Code Repos",
+    "description": "Preview Mermaid diagrams and Markdown files with Mermaid blocks in Azure DevOps Repos",
     "public": true,
     "categories": ["Azure Repos"],
     "tags": [

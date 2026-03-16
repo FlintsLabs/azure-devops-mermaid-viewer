@@ -1,8 +1,10 @@
 # Mermaid Viewer
 
-Get a preview of your [mermaid](https://mermaid-js.github.io/mermaid/) diagrams in the Azure DevOps Repo.
+Preview [Mermaid](https://mermaid-js.github.io/mermaid/) diagrams and Markdown files directly inside Azure DevOps Repos and Pull Requests.
 
-This extension currently works with `.mmd` and `.md` files.
+This FlintsLabs fork is based on the original project by [DanieleCas](https://github.com/daniecas/azure-devops-mermaid-viewer). Credit is intentionally preserved here for the original implementation and idea.
+
+This extension works with `.mmd` and `.md` files.
 
 ## Usage
 
@@ -17,16 +19,36 @@ Go to Repos:
   
   ![Pull Request: Preview Diagram](doc/pr_preview_diagram.png)
 
+## Supported Markdown
 
-note: in `.md` extension you need to use  `:::mermaid` convention to avoid conflicts with markdown statements, you can find an example in src/test/markdown-test.md Mermaid Diagram 2
+For Markdown preview, the extension supports common repository documentation structures including:
+- headings
+- paragraphs
+- lists
+- links
+- inline code
+- fenced code blocks
+- blockquotes
+- tables
+- Mermaid blocks using ```` ```mermaid ```` or `:::mermaid`
 
-The extension is based on Mermaid 11.12.2 version, so potentially breaking changes will not affect your stable features (unfortunately this is happened with others extensions) 
+An example is available in `src/test/markdown-test.md`.
+
+## How It Works
+
+The renderer is registered as an Azure DevOps content renderer for `.mmd` and `.md` files:
+- `.mmd` content is rendered as Mermaid directly
+- `.md` content is parsed into HTML
+- Mermaid blocks inside Markdown are detected and rendered as diagrams
+- the extension resizes itself to fit the content and follows the active Azure DevOps theme
+
+The extension is based on Mermaid 11.12.2, so Mermaid rendering remains stable and under the control of this extension.
 
 ## Feedback
 
 Please let me know how the extension can be improved! Contributions are also welcome!
 
-- Create an issue in [GitHub](https://github.com/daniecas/azure-devops-mermaid-viewer/issues)
+- Create an issue in [GitHub](https://github.com/FlintsLabs/azure-devops-mermaid-viewer/issues)
 
 
 <br/><br/>
