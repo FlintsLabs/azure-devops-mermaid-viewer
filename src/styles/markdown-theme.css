@@ -1,44 +1,82 @@
-/* Let the host page background show through */
 .markdown-body {
   background: transparent !important;
-  color: inherit !important;
+  color: var(--fgColor-default, var(--text-primary-color, #1f2328)) !important;
 }
 
-/* Slightly muted code background on light themes */
+:root[data-theme-mode="light"] .markdown-body {
+  color-scheme: light;
+  --fgColor-default: #1f2328;
+  --fgColor-muted: #59636e;
+  --fgColor-accent: #0969da;
+  --bgColor-default: #ffffff;
+  --bgColor-muted: #f6f8fa;
+  --bgColor-neutral-muted: #818b981f;
+  --bgColor-attention-muted: #fff8c5;
+  --borderColor-default: #d1d9e0;
+  --borderColor-muted: #d1d9e0b3;
+  --borderColor-neutral-muted: #d1d9e0b3;
+}
+
+:root[data-theme-mode="dark"] .markdown-body {
+  color-scheme: dark;
+  --fgColor-default: #f0f6fc;
+  --fgColor-muted: #9198a1;
+  --fgColor-accent: #4493f8;
+  --bgColor-default: #0d1117;
+  --bgColor-muted: #151b23;
+  --bgColor-neutral-muted: #656c7633;
+  --bgColor-attention-muted: #bb800926;
+  --borderColor-default: #3d444d;
+  --borderColor-muted: #3d444db3;
+  --borderColor-neutral-muted: #3d444db3;
+}
+
 .markdown-body pre,
 .markdown-body code {
   background: rgba(27,31,35,0.04);
-  color: inherit;
+  color: var(--fgColor-default, var(--text-primary-color, #1f2328));
 }
 
-/* Dark-mode adjustments */
-@media (prefers-color-scheme: dark) {
-  .markdown-body {
-    color: #c9d1d9 !important;
-  }
-
-  .markdown-body a {
-    color: #58a6ff !important;
-  }
-
-  .markdown-body pre,
-  .markdown-body code {
-    background: rgba(110,118,129,0.12) !important;
-    color: #e6edf3 !important;
-  }
-
-  .markdown-body blockquote {
-    color: #8b949e !important;
-    border-left-color: rgba(110,118,129,0.3) !important;
-  }
-
-  .markdown-body table th,
-  .markdown-body table td {
-    border-color: rgba(110,118,129,0.12) !important;
-  }
+:root[data-theme-mode="light"] .markdown-body a {
+  color: #0969da !important;
 }
 
-/* Small utility to keep images adaptive */
+:root[data-theme-mode="light"] .markdown-body table tr {
+  background-color: #ffffff;
+}
+
+:root[data-theme-mode="light"] .markdown-body table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+:root[data-theme-mode="dark"] .markdown-body a {
+  color: #58a6ff !important;
+}
+
+:root[data-theme-mode="dark"] .markdown-body pre,
+:root[data-theme-mode="dark"] .markdown-body code {
+  background: rgba(110,118,129,0.12) !important;
+  color: #e6edf3 !important;
+}
+
+:root[data-theme-mode="dark"] .markdown-body blockquote {
+  color: #8b949e !important;
+  border-left-color: rgba(110,118,129,0.3) !important;
+}
+
+:root[data-theme-mode="dark"] .markdown-body table th,
+:root[data-theme-mode="dark"] .markdown-body table td {
+  border-color: rgba(110,118,129,0.12) !important;
+}
+
+:root[data-theme-mode="dark"] .markdown-body table tr {
+  background-color: #0d1117;
+}
+
+:root[data-theme-mode="dark"] .markdown-body table tr:nth-child(2n) {
+  background-color: #151b23;
+}
+
 .markdown-body img {
   max-width: 100%;
   height: auto;

@@ -37,7 +37,7 @@
         }
     },
     "icons": {
-        "default": "doc/mermaid.png"
+        "default": "doc/mermaid-viewer-flintslabs.png"
     },
     "targets": [
         {
